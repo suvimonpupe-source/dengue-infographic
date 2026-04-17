@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สถานการณ์โรคเลปโตสไปโรสิส อำเภอไพรบึง</title>
+    
+    <!-- 
+    Chosen Palette: Vibrant Teal & Amber (Teal #0d9488, Amber #d97706, Navy #1e3a8a, Rose #e11d48, Light Blue #e0f2fe)
+    Application Structure Plan: The SPA uses a vertical scrolling infographic structure. It begins with high-impact KPIs (Inform), flows into seasonal and demographic data (Change/Compare) using interactive charts, illustrates the infection flow using CSS/HTML structures (Organize), and concludes with preventive measures. This guides the user logically from understanding the severity to knowing how to protect themselves.
+    Visualization & Content Choices: 
+    1. KPIs: Big numbers (Inform) -> HTML/Tailwind styling -> Immediate impact.
+    2. Trend: Line Chart (Change) -> Chart.js -> Shows seasonal spikes clearly.
+    3. Occupations: Horizontal Bar Chart (Compare) -> Chart.js -> Compares risk across groups.
+    4. Symptoms: Doughnut Chart (Composition) -> Chart.js -> Shows prevalence of symptoms.
+    5. Transmission: CSS Grid Flowchart (Organize) -> HTML/Tailwind + Unicode -> Visualizes the path without SVG.
+    CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
+    -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Prompt', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            navy: '#1e3a8a',
+                            teal: '#0d9488',
+                            amber: '#d97706',
+                            rose: '#e11d48',
+                            light: '#e0f2fe',
+                            bg: '#f8fafc',
+                            ForestGreen: '#228B22'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #f8fafc;
+            color: #334155;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 380px;
+            }
+        }
+        .material-card {
+            background: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .material-card:hover {
+            transform: translateY(-4px);
+        }
+        .flow-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body class="antialiased pb-20">
+
+    <header class="bg-brand-navy text-white pt-12 pb-20 px-6 border-b-8 border-brand-amber">
+        <div class="max-w-5xl mx-auto text-center">
+            
+            <!-- Logo Container -->
+            <div class="w-32 h-32 mx-auto mb-6 bg-white rounded-full flex items-center justify-center shadow-2xl border-4 border-white overflow-hidden relative">
+                <!-- เปลี่ยนชื่อไฟล์ตรง src เป็น logo.jpg -->
+                <img src="data:image/jpeg;base64,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" alt="" width="450" height="450" />
+            </div>
+
+            <h1 class="text-4xl md:text-6xl font-bold mb-4 tracking-tight">สถานการณ์โรคเลปโตสไปโรสิส</h1>
+            <h2 class="text-2xl md:text-3xl font-light text-brand-light">พื้นที่อำเภอไพรบึง จังหวัดศรีสะเกษ</h2>
+            <p class="mt-6 text-lg text-slate-300 max-w-2xl mx-auto">
+                รายงานสถานการณ์โรคเลปโตสไปโรสิส (โรคฉี่หนู) เพื่อการเฝ้าระวังและป้องกันภัยสุขภาพของพี่น้องชาวอำเภอไพรบึง โดยงานควบคุมโรคติดต่อ โรงพยาบาลไพรบึง
+            </p>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 -mt-10">
+        
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+            <div class="material-card p-6 text-center border-t-4 border-brand-teal">
+                <p class="text-slate-500 font-semibold mb-2">ผู้ป่วยสะสม (ปีล่าสุด)</p>
+                <p class="text-5xl font-bold text-brand-navy">5</p>
+                <p class="text-sm text-slate-400 mt-2">รายในพื้นที่ อ.ไพรบึง</p>
+            </div>
+            <div class="material-card p-6 text-center border-t-4 border-brand-rose">
+                <p class="text-slate-500 font-semibold mb-2">อัตราป่วยต่อแสนประชากร</p>
+                <p class="text-4xl font-bold text-brand-ForestGreen mt-2">10.60</p>
+                <p class="text-sm text-slate-400 mt-2">สูงสุดอันดับ 3 ของจังหวัด</p>
+            </div>
+            <div class="material-card p-6 text-center border-t-4 border-brand-rose">
+                <p class="text-slate-500 font-semibold mb-2">เสียชีวิต</p>
+                <p class="text-4xl font-bold text-brand-rose mt-2">0</p>
+                <p class="text-sm text-slate-400 mt-2">อัตราป่วยตายร้อยละ 0</p>
+            </div>
+            <div class="material-card p-6 text-center border-t-4 border-brand-rose">
+                <p class="text-slate-500 font-semibold mb-2">พื้นที่เฝ้าระวังสูงสุด</p>
+                <p class="text-4xl font-bold text-brand-rose mt-2">ต.สำโรงพลัน</p>
+                <p class="text-sm text-slate-400 mt-2">พบผู้ป่วยสะสมมากที่สุด</p>
+            </div>
+            <div class="material-card p-6 text-center border-t-4 border-brand-amber">
+                <p class="text-slate-500 font-semibold mb-2">กลุ่มอาชีพเสี่ยงสูงสุด</p>
+                <p class="text-4xl font-bold text-brand-amber mt-2">เกษตรกร</p>
+                <p class="text-sm text-slate-400 mt-2">คิดเป็น 88% ของผู้ป่วยทั้งหมด</p>
+            </div>
+        </section>
+
+        <section class="mb-16">
+            <div class="mb-8">
+                <h3 class="text-3xl font-bold text-brand-navy mb-2">ข้อมูลระบาดวิทยา อำเภอไพรบึง</h3>
+                <p class="text-slate-600 text-lg">สถิติผู้ป่วยในพื้นที่ เพื่อเป็นข้อมูลในการวางแผนป้องกันและควบคุมโรคของแต่ละตำบล</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <div class="flex flex-col">
+                    <div class="bg-white p-4 rounded-t-xl border-b border-slate-100">
+                        <h4 class="text-xl font-bold text-slate-800">แนวโน้มผู้ป่วยรายเดือน (ปี 2568)</h4>
+                        <p class="text-sm text-slate-500">พบผู้ป่วยพุ่งสูงในช่วงฤดูทำนาและฤดูฝน (ส.ค. - ต.ค.)</p>
+                    </div>
+                    <div class="chart-container rounded-t-none">
+                        <canvas id="trendChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="flex flex-col">
+                    <div class="bg-white p-4 rounded-t-xl border-b border-slate-100">
+                        <h4 class="text-xl font-bold text-slate-800">ผู้ป่วยสะสมแยกตามตำบล</h4>
+                        <p class="text-sm text-slate-500">เปรียบเทียบจำนวนผู้ติดเชื้อในแต่ละพื้นที่ของอำเภอไพรบึง</p>
+                    </div>
+                    <div class="chart-container rounded-t-none">
+                        <canvas id="occChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="flex flex-col">
+                    <div class="bg-white p-4 rounded-t-xl border-b border-slate-100">
+                        <h4 class="text-xl font-bold text-slate-800">สัดส่วนผู้ป่วยตามกลุ่มอาชีพ</h4>
+                        <p class="text-sm text-slate-500">กลุ่มเกษตรกรมีความเสี่ยงสูงสุดจากการลุยน้ำย่ำโคลน</p>
+                    </div>
+                    <div class="chart-container rounded-t-none">
+                        <canvas id="sympChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="flex flex-col justify-center">
+                    <div class="bg-brand-light p-8 rounded-xl border border-blue-200">
+                        <h4 class="text-2xl font-bold text-brand-navy mb-4">สังเกตอาการ ⚠️</h4>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <span class="text-2xl mr-3">🌡️</span>
+                                <div>
+                                    <strong class="text-slate-800 block">ไข้สูงเฉียบพลัน</strong>
+                                    <span class="text-slate-600 text-sm">อุณหภูมิร่างกายสูงเกิน 38 องศา หนาวสั่น</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-2xl mr-3">🦵</span>
+                                <div>
+                                    <strong class="text-slate-800 block">ปวดกล้ามเนื้อรุนแรง</strong>
+                                    <span class="text-slate-600 text-sm">โดยเฉพาะบริเวณน่องและโคนขา</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-2xl mr-3">👁️</span>
+                                <div>
+                                    <strong class="text-slate-800 block">ตาแดงคั่งเลือด</strong>
+                                    <span class="text-slate-600 text-sm">พบรอยแดงในตาขาวโดยไม่มีขี้ตา</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16">
+            <div class="mb-8 text-center">
+                <h3 class="text-3xl font-bold text-brand-navy mb-2">วงจรการแพร่กระจายเชื้อ</h3>
+                <p class="text-slate-600 text-lg max-w-2xl mx-auto">แผนผังแสดงกระบวนการที่เชื้อแบคทีเรียจากสัตว์แพร่เข้าสู่ร่างกายมนุษย์</p>
+            </div>
+
+            <div class="material-card p-8 bg-white">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div class="text-center w-full md:w-1/4">
+                        <div class="text-6xl mb-4 bg-slate-100 h-24 w-24 mx-auto rounded-full flex items-center justify-center border-4 border-slate-300">🐀</div>
+                        <h4 class="font-bold text-lg text-slate-800">สัตว์พาหะ</h4>
+                        <p class="text-sm text-slate-500 mt-2">หนู สุนัข โค กระบือ ที่มีเชื้อ แบคทีเรียอาศัยในท่อไต</p>
+                    </div>
+                    
+                    <div class="flow-arrow hidden md:flex">➡️</div>
+                    <div class="flow-arrow md:hidden">⬇️</div>
+
+                    <div class="text-center w-full md:w-1/4">
+                        <div class="text-6xl mb-4 bg-blue-50 h-24 w-24 mx-auto rounded-full flex items-center justify-center border-4 border-blue-300">💦</div>
+                        <h4 class="font-bold text-lg text-slate-800">ปนเปื้อนในน้ำ/ดิน</h4>
+                        <p class="text-sm text-slate-500 mt-2">สัตว์ขับถ่ายปัสสาวะที่มีเชื้อ ลงสู่แหล่งน้ำท่วมขังหรือดินเปียก</p>
+                    </div>
+
+                    <div class="flow-arrow hidden md:flex">➡️</div>
+                    <div class="flow-arrow md:hidden">⬇️</div>
+
+                    <div class="text-center w-full md:w-1/4">
+                        <div class="text-6xl mb-4 bg-rose-50 h-24 w-24 mx-auto rounded-full flex items-center justify-center border-4 border-brand-rose">🩸</div>
+                        <h4 class="font-bold text-lg text-slate-800">เข้าสู่ร่างกายคน</h4>
+                        <p class="text-sm text-slate-500 mt-2">เชื้อไชเข้าทางบาดแผล รอยขีดข่วน หรือเยื่อบุตา ผิวหนังที่เปื่อยยุ่ย</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="mb-8">
+                <h3 class="text-3xl font-bold text-brand-navy mb-2">มาตรการป้องกันเบื้องต้น</h3>
+                <p class="text-slate-600 text-lg">แนวทางปฏิบัติเพื่อลดความเสี่ยงในการรับเชื้อโรคฉี่หนู</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-brand-teal text-white p-6 rounded-xl flex flex-col items-center text-center">
+                    <div class="text-4xl mb-3">👢</div>
+                    <h4 class="font-bold text-lg mb-2">สวมอุปกรณ์ป้องกัน</h4>
+                    <p class="text-teal-100 text-sm">ใส่รองเท้าบูท ถุงมือยาง ทุกครั้งที่ต้องลุยน้ำย่ำโคลน หรือทำความสะอาดบ้าน</p>
+                </div>
+                <div class="bg-brand-navy text-white p-6 rounded-xl flex flex-col items-center text-center">
+                    <div class="text-4xl mb-3">🚿</div>
+                    <h4 class="font-bold text-lg mb-2">ล้างตัวทันที</h4>
+                    <p class="text-blue-200 text-sm">รีบอาบน้ำชำระร่างกายด้วยสบู่ทันทีหลังสัมผัสน้ำที่สงสัยว่าปนเปื้อน</p>
+                </div>
+                <div class="bg-brand-amber text-white p-6 rounded-xl flex flex-col items-center text-center">
+                    <div class="text-4xl mb-3">🩹</div>
+                    <h4 class="font-bold text-lg mb-2">ปกปิดบาดแผล</h4>
+                    <p class="text-amber-100 text-sm">หากมีแผลตามร่างกาย ควรปิดด้วยพลาสเตอร์กันน้ำก่อนสัมผัสน้ำหรือดิน</p>
+                </div>
+                <div class="bg-brand-rose text-white p-6 rounded-xl flex flex-col items-center text-center">
+                    <div class="text-4xl mb-3">🗑️</div>
+                    <h4 class="font-bold text-lg mb-2">จัดการขยะให้มิดชิด</h4>
+                    <p class="text-rose-200 text-sm">ทิ้งขยะในถังที่มีฝาปิดมิดชิด เพื่อป้องกันไม่ให้เป็นแหล่งอาหารของหนูพาหะ</p>
+                </div>
+            </div>
+
+            <div class="mt-8 bg-white border-l-8 border-brand-rose p-6 rounded-lg shadow-md flex items-center justify-between flex-col md:flex-row gap-4">
+                <div>
+                    <h4 class="text-xl font-bold text-slate-800 mb-1">มีอาการไข้สูง ปวดน่อง หลังลุยน้ำ?</h4>
+                    <p class="text-slate-600">อย่าซื้อยาทานเอง! อาจเป็นอันตรายถึงชีวิตหากรักษาไม่ทันท่วงที</p>
+                </div>
+                <div class="text-center md:text-right">
+                    <p class="font-bold text-brand-navy text-lg">รีบมาพบแพทย์ที่</p>
+                    <p class="text-2xl font-extrabold text-brand-rose">โรงพยาบาลไพรบึง</p>
+                    <p class="text-sm text-slate-500">หรือ รพ.สต. ใกล้บ้านท่านทันที</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+<footer class="bg-white border-t border-slate-200 py-10">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+        <img src="logo.jpg" alt="Logo" class="h-16 w-16 mx-auto mb-4 logo-blend" onerror="this.style.display='none'">
+        <p class="font-bold text-slate-800">ด้วยความปรารถนาดีจาก โรงพยาบาลไพรบึง</p>
+        <p class="text-xs text-slate-400 mt-1">เลขที่ 56 หมู่ 20 ต.ไพรบึง อ.ไพรบึง จ.ศรีสะเกษ 33180</p>
+        <div class="mt-6 flex justify-center space-x-4 text-slate-400 text-sm">
+            <span>📞 045 675 258</span>
+            <span>🌐 www.praibuenghospital.org</span>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        const wrapLabel = (label, maxChars = 16) => {
+            if (label.length <= maxChars) return label;
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = '';
+
+            words.forEach(word => {
+                if ((currentLine + word).length > maxChars) {
+                    if (currentLine.trim() !== '') lines.push(currentLine.trim());
+                    currentLine = word + ' ';
+                } else {
+                    currentLine += word + ' ';
+                }
+            });
+            if (currentLine.trim() !== '') lines.push(currentLine.trim());
+            return lines;
+        };
+
+        const commonTooltipConfig = {
+            callbacks: {
+                title: function(tooltipItems) {
+                    const item = tooltipItems[0];
+                    let label = item.chart.data.labels[item.dataIndex];
+                    if (Array.isArray(label)) {
+                        return label.join(' ');
+                    } else {
+                        return label;
+                    }
+                }
+            }
+        };
+
+        Chart.defaults.font.family = "'Prompt', sans-serif";
+        Chart.defaults.color = '#64748b';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const rawTrendLabels = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
+            const trendData = [0, 1, 0, 2, 4, 6, 8, 12, 15, 8, 2, 0]; // ข้อมูลระดับอำเภอ
+            
+            const rawOccLabels = ['ต.ไพรบึง', 'ต.ปราสาทเยอ', 'ต.สำโรงพลัน', 'ต.ดินแดง', 'ต.โนนปูน', 'ต.สุขสวัสดิ์'];
+            const occData = [1, 0, 3, 1, 0, 0]; // ข้อมูลผู้ป่วยตามตำบลใน อ.ไพรบึง
+
+            const rawSympLabels = ['เกษตรกร (ทำนา/สวน)', 'รับจ้างทั่วไป', 'นักเรียน/นักศึกษา', 'ค้าขาย/ธุรกิจส่วนตัว', 'อื่นๆ'];
+            const sympData = [3, 2, 0, 0, 1]; // สัดส่วนกลุ่มอาชีพ
+
+            const wrappedTrendLabels = rawTrendLabels.map(l => wrapLabel(l));
+            const wrappedOccLabels = rawOccLabels.map(l => wrapLabel(l));
+            const wrappedSympLabels = rawSympLabels.map(l => wrapLabel(l));
+
+            new Chart(document.getElementById('trendChart'), {
+                type: 'line',
+                data: {
+                    labels: wrappedTrendLabels,
+                    datasets: [{
+                        label: 'ผู้ป่วยรายเดือน (ราย)',
+                        data: trendData,
+                        borderColor: '#e11d48',
+                        backgroundColor: 'rgba(225, 29, 72, 0.1)',
+                        borderWidth: 3,
+                        pointBackgroundColor: '#e11d48',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 5,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: commonTooltipConfig
+                    },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: '#f1f5f9' } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+
+            new Chart(document.getElementById('occChart'), {
+                type: 'bar',
+                data: {
+                    labels: wrappedOccLabels,
+                    datasets: [{
+                        label: 'จำนวนผู้ป่วย (ราย)',
+                        data: occData,
+                        backgroundColor: '#0d9488',
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: commonTooltipConfig
+                    },
+                    scales: {
+                        x: { 
+                            beginAtZero: true, 
+                            grid: { color: '#f1f5f9' }, 
+                            ticks: { 
+                                stepSize: 1, 
+                                maxTicksLimit: 30 
+                            }
+                        },
+                        y: { grid: { display: false } }
+                    }
+                }
+            });
+
+            new Chart(document.getElementById('sympChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: wrappedSympLabels,
+                    datasets: [{
+                        data: sympData,
+                        backgroundColor: ['#e11d48', '#d97706', '#0d9488', '#1e3a8a', '#94a3b8'],
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '60%',
+                    plugins: {
+                        legend: { position: 'right' },
+                        tooltip: commonTooltipConfig
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
