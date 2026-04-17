@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infographic: เจาะลึกสถานการณ์ไข้เลือดออก</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Kanit', sans-serif;
+            background-color: #F4F7FB;
+            color: #1E293B;
+            scroll-behavior: smooth;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 45vh;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 50vh;
+                max-height: 450px;
+            }
+        }
+        .stat-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(74, 21, 75, 0.2);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+<!-- Chosen Palette: Energetic & Playful (Deep Violet #4A154B, Hot Pink #FF3366, Bright Cyan #00C2D1, Sunny Yellow #FFC000, Light BG #F4F7FB) -->
+<!-- Application Structure Plan: The SPA is structured as a vertical scrolling infographic, broken into 4 logical sections: Hero/Intro (Hook), Demographics & Impact (Compare/Inform), Seasonal Trends (Change), and Clinical Phases & Prevention (Organize). A sticky navigation bar allows quick jumps. The layout uses a responsive Tailwind grid, presenting text alongside responsive chart containers to create a narrative flow rather than just a data dump. -->
+<!-- Visualization & Content Choices: 1. Big Numbers -> Goal: Inform -> Method: Styled HTML text cards -> Highlights severity. 2. Doughnut Chart -> Goal: Compare -> Method: Chart.js -> Shows age distribution. 3. Bar Chart -> Goal: Compare -> Method: Chart.js -> Shows regional distribution (utilizing label wrapping). 4. Area Chart -> Goal: Change -> Method: Chart.js -> Illustrates the spike during rainy season. 5. Timeline/Process -> Goal: Organize -> Method: HTML/CSS Grid -> Explains the 3 phases of Dengue. NO SVG or Mermaid JS used. -->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+<nav class="sticky top-0 z-50 bg-[#4A154B] text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <div class="flex items-center space-x-2">
+                <span class="text-2xl">🦟</span>
+                <span class="font-bold text-xl tracking-wide">DENGUE<span class="text-[#FF3366]">INFO</span></span>
+            </div>
+            <div class="hidden md:flex space-x-6">
+                <a href="#overview" class="hover:text-[#00C2D1] transition-colors font-medium">ภาพรวม</a>
+                <a href="#demographics" class="hover:text-[#00C2D1] transition-colors font-medium">กลุ่มเสี่ยง</a>
+                <a href="#trends" class="hover:text-[#00C2D1] transition-colors font-medium">ฤดูกาล</a>
+                <a href="#phases" class="hover:text-[#00C2D1] transition-colors font-medium">ระยะโรค & ป้องกัน</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<header class="bg-gradient-to-br from-[#4A154B] to-[#2D0D2E] text-white py-16 lg:py-24 relative overflow-hidden">
+    <div class="absolute top-0 left-0 w-full h-full opacity-10 text-[200px] leading-none pointer-events-none" style="content: '🩸'; font-family: sans-serif;">🩸🩸🩸</div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+        <h1 class="text-4xl md:text-6xl font-extrabold mb-6">ไข้เลือดออก: <span class="text-[#FF3366]">ภัยเงียบที่ป้องกันได้</span></h1>
+        <p class="text-lg md:text-2xl max-w-3xl mx-auto text-gray-200 mb-10 leading-relaxed">
+            เจาะลึกข้อมูล สถิติ และทำความเข้าใจพฤติกรรมของโรคไข้เลือดออก เพื่อเตรียมพร้อมรับมือและปกป้องคนที่คุณรักจากการคุกคามของยุงลาย
+        </p>
+    </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-24">
+
+    <section id="overview" class="scroll-mt-20">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-[#4A154B] mb-4">สถานการณ์ไข้เลือดออกในปัจจุบัน</h2>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">ภาพรวมตัวเลขผู้ป่วยและผู้เสียชีวิตสะสม แสดงให้เห็นถึงความรุนแรงและผลกระทบในวงกว้างระดับประเทศ</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="stat-card bg-white rounded-2xl p-8 shadow-lg border-b-4 border-[#FF3366] text-center">
+                <div class="text-5xl mb-4">🏥</div>
+                <h3 class="text-gray-500 font-medium mb-2">ผู้ป่วยสะสม (ราย)</h3>
+                <p class="text-4xl font-bold text-[#4A154B]">124,500</p>
+                <p class="text-sm text-[#FF3366] mt-2 font-medium">▲ เพิ่มขึ้น 15% จากปีที่แล้ว</p>
+            </div>
+            <div class="stat-card bg-white rounded-2xl p-8 shadow-lg border-b-4 border-[#00C2D1] text-center">
+                <div class="text-5xl mb-4">⚕️</div>
+                <h3 class="text-gray-500 font-medium mb-2">อัตราป่วย (ต่อประชากรแสนคน)</h3>
+                <p class="text-4xl font-bold text-[#4A154B]">188.4</p>
+                <p class="text-sm text-gray-500 mt-2 font-medium">สูงกว่าค่าเฉลี่ย 5 ปี</p>
+            </div>
+            <div class="stat-card bg-white rounded-2xl p-8 shadow-lg border-b-4 border-[#FFC000] text-center">
+                <div class="text-5xl mb-4">🖤</div>
+                <h3 class="text-gray-500 font-medium mb-2">ผู้เสียชีวิตสะสม (ราย)</h3>
+                <p class="text-4xl font-bold text-[#4A154B]">132</p>
+                <p class="text-sm text-[#FF3366] mt-2 font-medium">อัตราป่วยตาย 0.11%</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="demographics" class="scroll-mt-20 bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-gray-100">
+        <div class="mb-10 border-l-8 border-[#00C2D1] pl-6">
+            <h2 class="text-3xl font-bold text-[#4A154B] mb-4">ใครคือกลุ่มเสี่ยงสูงสุด? และพื้นที่ใดระบาดหนักสุด?</h2>
+            <p class="text-lg text-gray-600">การวิเคราะห์ข้อมูลผู้ป่วยแยกตามกลุ่มอายุและภูมิภาค ช่วยให้เราสามารถกำหนดเป้าหมายในการป้องกันและรณรงค์ได้อย่างแม่นยำ</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div>
+                <h3 class="text-xl font-bold text-[#4A154B] mb-2 text-center">สัดส่วนผู้ป่วยแยกตามกลุ่มอายุ</h3>
+                <p class="text-sm text-gray-500 mb-6 text-center">กลุ่มเด็กวัยเรียน (5-14 ปี) มีสัดส่วนการป่วยสูงที่สุดถึง 40%</p>
+                <div class="chart-container">
+                    <canvas id="ageDoughnutChart"></canvas>
+                </div>
+            </div>
+            
+            <div>
+                <h3 class="text-xl font-bold text-[#4A154B] mb-2 text-center">จำนวนผู้ป่วยแยกตามภูมิภาค</h3>
+                <p class="text-sm text-gray-500 mb-6 text-center">แสดงการกระจายตัวของโรคในแต่ละภูมิภาคของประเทศ</p>
+                <div class="chart-container">
+                    <canvas id="regionBarChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="trends" class="scroll-mt-20">
+        <div class="mb-10 text-center">
+            <h2 class="text-3xl font-bold text-[#4A154B] mb-4">แนวโน้มการระบาดรายเดือน (ฤดูกาล)</h2>
+            <p class="text-lg text-gray-600 max-w-3xl mx-auto">ไข้เลือดออกมีความสัมพันธ์กับฤดูฝนอย่างชัดเจน กราฟด้านล่างแสดงให้เห็นถึงจุดสูงสุดของการระบาดในช่วงกลางปี ซึ่งเป็นช่วงที่มีน้ำขังและยุงลายวางไข่ได้ดี</p>
+        </div>
+
+        <div class="bg-white rounded-3xl p-8 shadow-xl border-t-8 border-[#FF3366]">
+            <div class="chart-container w-full max-w-4xl mx-auto h-[50vh] max-h-[500px]">
+                <canvas id="seasonalAreaChart"></canvas>
+            </div>
+            <div class="mt-8 bg-[#FFF0F4] rounded-xl p-6 border border-[#FFD6E0] flex items-start space-x-4">
+                <div class="text-3xl">🌧️</div>
+                <div>
+                    <h4 class="font-bold text-[#FF3366] text-lg">ช่วงเฝ้าระวังสูงสุด (พฤษภาคม - กันยายน)</h4>
+                    <p class="text-gray-700">ปริมาณผู้ป่วยพุ่งสูงขึ้นอย่างก้าวกระโดดเมื่อเข้าสู่ฤดูฝน ควรเริ่มมาตรการกำจัดแหล่งเพาะพันธุ์ยุงลายตั้งแต่ก่อนเข้าฤดูฝน (มีนาคม - เมษายน) เพื่อตัดวงจร</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="phases" class="scroll-mt-20 grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div class="lg:col-span-7">
+            <div class="mb-8 border-l-8 border-[#FFC000] pl-6">
+                <h2 class="text-3xl font-bold text-[#4A154B] mb-4">3 ระยะอันตรายของโรคไข้เลือดออก</h2>
+                <p class="text-lg text-gray-600">การรู้ทันระยะของโรคช่วยลดความเสี่ยงในการเสียชีวิต ระยะที่ไข้ลดลงคือระยะที่อันตรายที่สุด</p>
+            </div>
+
+            <div class="space-y-6">
+                <div class="flex flex-col sm:flex-row bg-white rounded-2xl shadow-md border-l-4 border-[#FF3366] overflow-hidden">
+                    <div class="bg-[#FFE5EC] w-full sm:w-32 flex flex-col justify-center items-center p-4">
+                        <span class="text-4xl mb-1">🔥</span>
+                        <span class="font-bold text-[#FF3366] text-center">ระยะไข้สูง</span>
+                        <span class="text-xs text-gray-500">(วันที่ 2-7)</span>
+                    </div>
+                    <div class="p-6 flex-1">
+                        <ul class="list-disc pl-5 text-gray-700 space-y-1">
+                            <li>ไข้สูงเฉียบพลัน 39-40 องศาเซลเซียส</li>
+                            <li>หน้าแดง ปวดศีรษะ ปวดกระบอกตา ปวดเมื่อย</li>
+                            <li>อาจมีจุดเลือดออกตามผิวหนัง</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row bg-white rounded-2xl shadow-md border-l-4 border-[#4A154B] overflow-hidden transform scale-100 sm:scale-105 z-10 relative">
+                    <div class="bg-[#F0E6F0] w-full sm:w-32 flex flex-col justify-center items-center p-4">
+                        <span class="text-4xl mb-1">⚠️</span>
+                        <span class="font-bold text-[#4A154B] text-center">ระยะวิกฤต</span>
+                        <span class="text-xs text-gray-500">(วันที่ 3-6)</span>
+                    </div>
+                    <div class="p-6 flex-1">
+                        <p class="text-sm font-bold text-[#FF3366] mb-2">** อันตรายที่สุด ไข้จะเริ่มลดลง **</p>
+                        <ul class="list-disc pl-5 text-gray-700 space-y-1">
+                            <li>มีการรั่วของพลาสมาออกจากหลอดเลือด</li>
+                            <li>อาจเกิดภาวะช็อก มือเท้าเย็น กระสับกระส่าย</li>
+                            <li>อาจมีเลือดออกผิดปกติ เช่น อาเจียนเป็นเลือด</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row bg-white rounded-2xl shadow-md border-l-4 border-[#00C2D1] overflow-hidden">
+                    <div class="bg-[#E5FAFB] w-full sm:w-32 flex flex-col justify-center items-center p-4">
+                        <span class="text-4xl mb-1">💚</span>
+                        <span class="font-bold text-[#00C2D1] text-center">ระยะฟื้นตัว</span>
+                        <span class="text-xs text-gray-500">(7 วันขึ้นไป)</span>
+                    </div>
+                    <div class="p-6 flex-1">
+                        <ul class="list-disc pl-5 text-gray-700 space-y-1">
+                            <li>อาการทั่วไปดีขึ้น เริ่มรับประทานอาหารได้</li>
+                            <li>ปัสสาวะออกมากขึ้น ชีพจรกลับมาปกติ</li>
+                            <li>มีผื่นฟื้นตัว คันยุบยิบตามฝ่ามือฝ่าเท้า</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="lg:col-span-5 bg-[#4A154B] rounded-3xl p-8 text-white shadow-xl flex flex-col justify-center">
+            <h2 class="text-3xl font-bold mb-6 text-[#FFC000]">มาตรการ 5 ป. 1 ข.</h2>
+            <p class="mb-8 text-gray-200">ปฏิบัติเป็นประจำเพื่อกำจัดแหล่งเพาะพันธุ์ยุงลาย ตัดวงจรการระบาด</p>
+            
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-white/10 p-4 rounded-xl backdrop-blur-sm border border-white/20">
+                    <div class="text-2xl mb-1">🔒</div>
+                    <h4 class="font-bold text-[#00C2D1]">ปิด</h4>
+                    <p class="text-xs text-gray-300">ปิดภาชนะขังน้ำให้มิดชิด</p>
+                </div>
+                <div class="bg-white/10 p-4 rounded-xl backdrop-blur-sm border border-white/20">
+                    <div class="text-2xl mb-1">🔄</div>
+                    <h4 class="font-bold text-[#FFC000]">เปลี่ยน</h4>
+                    <p class="text-xs text-gray-300">เปลี่ยนน้ำในแจกันทุก 7 วัน</p>
+                </div>
+                <div class="bg-white/10 p-4 rounded-xl backdrop-blur-sm border border-white/20">
+                    <div class="text-2xl mb-1">🐟</div>
+                    <h4 class="font-bold text-[#FF3366]">ปล่อย</h4>
+                    <p class="text-xs text-gray-300">ปล่อยปลากินลูกน้ำ</p>
+                </div>
+                <div class="bg-white/10 p-4 rounded-xl backdrop-blur-sm border border-white/20">
+                    <div class="text-2xl mb-1">🧹</div>
+                    <h4 class="font-bold text-[#00C2D1]">ปรับปรุง</h4>
+                    <p class="text-xs text-gray-300">ปรับปรุงสิ่งแวดล้อมให้โปร่ง</p>
+                </div>
+                <div class="bg-white/10 p-4 rounded-xl backdrop-blur-sm border border-white/20">
+                    <div class="text-2xl mb-1">✅</div>
+                    <h4 class="font-bold text-[#FFC000]">ปฏิบัติ</h4>
+                    <p class="text-xs text-gray-300">ทำเป็นประจำจนเป็นนิสัย</p>
+                </div>
+                <div class="bg-[#FF3366]/80 p-4 rounded-xl backdrop-blur-sm border border-white/20">
+                    <div class="text-2xl mb-1">🧽</div>
+                    <h4 class="font-bold text-white">ขัด</h4>
+                    <p class="text-xs text-white/90">ขัดไข่ยุงลายข้างภาชนะ</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer class="bg-[#1E293B] text-gray-400 py-8 text-center mt-12">
+    <p>© 2026 Dengue Info Dashboard. ข้อมูลจำลองเพื่อการนำเสนอในรูปแบบ Infographic.</p>
+</footer>
+
+<script>
+    function wrapLabel(label) {
+        if (typeof label !== 'string') return label;
+        if (label.length <= 16) return label;
+        
+        const words = label.split(' ');
+        const lines = [];
+        let currentLine = '';
+        
+        words.forEach(word => {
+            if ((currentLine + word).length > 16) {
+                if (currentLine.trim() !== '') lines.push(currentLine.trim());
+                currentLine = word + ' ';
+            } else {
+                currentLine += word + ' ';
+            }
+        });
+        
+        if (currentLine.trim() !== '') lines.push(currentLine.trim());
+        return lines;
+    }
+
+    const commonTooltipConfig = {
+        callbacks: {
+            title: function(tooltipItems) {
+                const item = tooltipItems[0];
+                let label = item.chart.data.labels[item.dataIndex];
+                if (Array.isArray(label)) {
+                    return label.join(' ');
+                } else {
+                    return label;
+                }
+            }
+        },
+        backgroundColor: 'rgba(30, 41, 59, 0.95)',
+        titleFont: { family: 'Kanit', size: 14 },
+        bodyFont: { family: 'Kanit', size: 14 },
+        padding: 12,
+        cornerRadius: 8,
+    };
+
+    const ageCtx = document.getElementById('ageDoughnutChart').getContext('2d');
+    new Chart(ageCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['0-4 ปี', '5-14 ปี', '15-24 ปี', '25-34 ปี', '35-44 ปี', '45 ปีขึ้นไป'].map(wrapLabel),
+            datasets: [{
+                data: [10, 40, 25, 12, 8, 5],
+                backgroundColor: [
+                    '#FFC000', '#FF3366', '#00C2D1', '#4A154B', '#94A3B8', '#CBD5E1'
+                ],
+                borderWidth: 2,
+                borderColor: '#ffffff',
+                hoverOffset: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '60%',
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: { font: { family: 'Kanit' }, padding: 20, usePointStyle: true }
+                },
+                tooltip: {
+                    ...commonTooltipConfig,
+                    callbacks: {
+                        ...commonTooltipConfig.callbacks,
+                        label: function(context) {
+                            return ' สัดส่วน: ' + context.parsed + '%';
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    const regionCtx = document.getElementById('regionBarChart').getContext('2d');
+    new Chart(regionCtx, {
+        type: 'bar',
+        data: {
+            labels: ['ภาคตะวันออกเฉียงเหนือ', 'ภาคกลางและตะวันตก', 'ภาคใต้', 'ภาคเหนือ', 'กรุงเทพมหานคร'].map(wrapLabel),
+            datasets: [{
+                label: 'จำนวนผู้ป่วย (ราย)',
+                data: [45000, 32000, 25000, 15000, 7500],
+                backgroundColor: '#00C2D1',
+                borderRadius: 6,
+                hoverBackgroundColor: '#FF3366'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: commonTooltipConfig
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: '#E2E8F0', drawBorder: false },
+                    ticks: { font: { family: 'Kanit' } }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { font: { family: 'Kanit' } }
+                }
+            }
+        }
+    });
+
+    const seasonalCtx = document.getElementById('seasonalAreaChart').getContext('2d');
+    
+    let gradient = seasonalCtx.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, 'rgba(255, 51, 102, 0.6)');   
+    gradient.addColorStop(1, 'rgba(255, 51, 102, 0.05)');  
+
+    new Chart(seasonalCtx, {
+        type: 'line',
+        data: {
+            labels: ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'].map(wrapLabel),
+            datasets: [{
+                label: 'จำนวนผู้ป่วยรายเดือน',
+                data: [3000, 2500, 2800, 4500, 12000, 22000, 28000, 24000, 15000, 9000, 6000, 4000],
+                borderColor: '#FF3366',
+                backgroundColor: gradient,
+                borderWidth: 4,
+                pointBackgroundColor: '#FFFFFF',
+                pointBorderColor: '#FF3366',
+                pointBorderWidth: 2,
+                pointRadius: 5,
+                pointHoverRadius: 8,
+                pointHoverBackgroundColor: '#FF3366',
+                pointHoverBorderColor: '#FFFFFF',
+                fill: true,
+                tension: 0.4 
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: commonTooltipConfig
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: '#E2E8F0', drawBorder: false },
+                    ticks: { font: { family: 'Kanit' } }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { font: { family: 'Kanit' }, maxRotation: 45, minRotation: 0 }
+                }
+            },
+            interaction: {
+                mode: 'index',
+                intersect: false,
+            }
+        }
+    });
+</script>
+</body>
+</html>
